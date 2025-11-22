@@ -1,9 +1,16 @@
 package com.parkee.pos.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parkee.pos.dto.MemberResponse;
 import com.parkee.pos.service.MemberService;
 import com.parkee.pos.entity.Member;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TransferQueue;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +27,17 @@ public class MemberController {
     }
 
     @GetMapping("/vehicle/{vehicleNo}")
-    public MemberResponse getMemberByVehicleNo(@PathVariable String vehicleNo) {
-        return service.getByVehicleNo(vehicleNo);
+    public ResponseEntity<Map<String, Object>> getMemberByVehicleNo(@PathVariable String vehicleNo) {
+        MemberResponse result =  service.getByVehicleNo(vehicleNo);
+        Map<String, Object> transformResult = new HashMap<>();
+        if (result == null) {
+            transformResult.put("isMember", Boolean.FALSE);
+            return ResponseEntity.ok(transformResult);
+        }
+        transformResult.put("isMember", Boolean.TRUE);
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> transmapper = mapper.convertValue(result, Map.class);
+        transformResult.putAll(transmapper);
+        return ResponseEntity.ok(transformResult);
     }
 }

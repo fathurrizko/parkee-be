@@ -2,7 +2,6 @@ package com.parkee.pos.repository;
 
 import com.parkee.pos.dto.MemberResponse;
 import com.parkee.pos.entity.Member;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -32,5 +31,4 @@ public interface MemberRepository extends JpaRepository<Member, String> {
         WHERE m.vehicle_no = :vehicleNo
     """, nativeQuery = true)
     MemberResponse findByVehicleNo(String vehicleNo);
-
 }
