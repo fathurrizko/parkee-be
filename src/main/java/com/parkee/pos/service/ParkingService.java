@@ -22,6 +22,14 @@ public class ParkingService {
         return jdbc.findClockInByVehicleNo(vehicleNo); 
     }
     
+    public Map<String, Object> getClockOutTicket(String vehicleNo) {
+        return jdbc.getParkingRates(vehicleNo); 
+    }
+    
+    public Map<String, Object>saveClockOut(Map<String, Object> prm) {
+        return jdbc.saveClockOut(prm); 
+    }
+    
     public Parking insertClockIn(String vehicleNo, String vehicleType, String posCode) {
         Parking parking = new Parking();
         LocalDateTime now = LocalDateTime.now();

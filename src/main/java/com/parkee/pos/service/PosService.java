@@ -14,7 +14,6 @@ public class PosService {
     }
 
     public Pos findByPosCode(String posCode) {
-        System.out.println("service: " +posCode);
         return repo.findByPosCode(posCode);
     }
 
